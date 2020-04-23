@@ -2081,7 +2081,7 @@ module Mk (B : BOT) = struct
     | `Bool true -> begin
         match the_list @@ get_field "result" obj with
         | x :: _ -> Success (Update.read x)
-        | [] -> Failure (Format.sprintf "Result is empty: %s" json)
+        | [] -> Failure "success"
       end
     | _ -> Failure (the_string @@ get_field "description" obj)
 
@@ -2102,7 +2102,7 @@ module Mk (B : BOT) = struct
         let update =
           match the_list @@ get_field "result" obj with
           | x :: _ -> Success (Update.read x)
-          | [] -> Failure (Format.sprintf "Result is empty %s" json)
+          | [] -> Failure "success"
         in
         (* Set the offset to either: the current offset OR the latest update + 1, if one exists *)
         offset := default !offset ((fun update -> get_id update + 1) <$> update);
