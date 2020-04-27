@@ -11,6 +11,11 @@ depends: [
   "alcotest"
   "fmt"
   "logs"
+  "lwt"
+  "uri"
+  "cohttp-lwt-unix"
+  "yojson"
+  "batteries"
 ]
 build: [
   ["dune" "subst"] {pinned}
