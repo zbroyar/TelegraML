@@ -18,6 +18,7 @@ module User = struct
     last_name  : string option;
     username   : string option
   }
+  [@@deriving show]
 
   let create ~id ~first_name ?(last_name=None) ?(username=None) () =
     {id; first_name; last_name; username}
@@ -32,6 +33,7 @@ end
 
 module Chat = struct
   type chat_type = Private | Group | Supergroup | Channel
+  [@@deriving show]
 
   let read_type = function
     | "private" -> Private
@@ -48,6 +50,7 @@ module Chat = struct
     first_name : string option;
     last_name  : string option
   }
+  [@@deriving show]
 
   let create ~id ~chat_type ?(title=None) ?(username=None) ?(first_name=None) ?(last_name=None) () =
     {id; chat_type; title; username; first_name; last_name}
@@ -75,6 +78,7 @@ module MessageEntity = struct
     | Pre
     | TextLink of string
     | TextMention of User.user
+  [@@deriving show]
 
   let entity_type_of_string url user = function
     | "mention" -> Mention
@@ -101,6 +105,7 @@ module MessageEntity = struct
     offset      : int;
     length      : int
   }
+  [@@deriving show]
 
   let create ~entity_type ~offset ~length () =
     {entity_type; offset; length}
@@ -230,6 +235,7 @@ module PhotoSize = struct
     height    : int;
     file_size : int option
   }
+  [@@deriving show]
 
   let create ~file_id ~width ~height ?(file_size = None) () =
     {file_id; width; height; file_size}
@@ -287,6 +293,7 @@ module Audio = struct
     mime_type : string option;
     file_size : int option
   }
+  [@@deriving show]
 
   let create ~file_id ~duration ?(performer = None) ?(title = None) ?(mime_type = None) ?(file_size = None) () =
     {file_id; duration; performer; title; mime_type; file_size}
@@ -346,6 +353,7 @@ module Document = struct
     mime_type : string option;
     file_size : int option
   }
+  [@@deriving show]
 
   let create ~file_id ?(thumb = None) ?(file_name = None) ?(mime_type = None) ?(file_size = None) () =
     {file_id; thumb; file_name; mime_type; file_size}
@@ -396,6 +404,7 @@ module Sticker = struct
     emoji     : string option;
     file_size : int option
   }
+  [@@deriving show]
 
   let create ~file_id ~width ~height ?(thumb = None) ?(emoji = None) ?(file_size = None) () =
     {file_id; width; height; thumb; emoji; file_size}
@@ -448,6 +457,7 @@ module Video = struct
     mime_type : string option;
     file_size : int option
   }
+  [@@deriving show]
 
   let create ~file_id ~width ~height ~duration ?(thumb = None) ?(mime_type = None) ?(file_size = None) () =
     {file_id; width; height; duration; thumb; mime_type; file_size}
@@ -510,6 +520,7 @@ module Voice = struct
     mime_type : string option;
     file_size : int option
   }
+  [@@deriving show]
 
   let create ~file_id ~duration ?(mime_type = None) ?(file_size = None) () =
     {file_id; duration; mime_type; file_size}
@@ -560,6 +571,7 @@ module Contact = struct
     last_name    : string option;
     user_id      : int option
   }
+  [@@deriving show]
 
   let create ~phone_number ~first_name ?(last_name=None) ?(user_id=None) () =
     {phone_number; first_name; last_name; user_id}
@@ -602,6 +614,7 @@ module Location = struct
     longitude : float;
     latitude  : float
   }
+  [@@deriving show]
 
   let create ~longitude ~latitude () =
     {longitude; latitude}
@@ -642,6 +655,7 @@ module Venue = struct
     address       : string;
     foursquare_id : string option
   }
+  [@@deriving show]
 
   let create ~location ~title ~address ?(foursquare_id=None) () =
     {location; title; address; foursquare_id}
@@ -736,6 +750,7 @@ module Message = struct
     migrate_from_chat_id    : int option;
     pinned_message          : message option
   }
+  [@@deriving show]
 
   let create ~message_id ?(from=None) ~date ~chat ?(forward_from=None) ?(forward_from_chat=None) ?(forward_date=None) ?(reply_to=None) ?(edit_date = None) ?(text=None) ?(entities=None) ?(audio=None) ?(document=None) ?(photo=None) ?(sticker=None) ?(video=None) ?(voice=None) ?(caption=None) ?(contact=None) ?(location=None) ?(venue=None) ?(new_chat_member=None) ?(left_chat_member=None) ?(new_chat_title=None) ?(new_chat_photo=None) ?(delete_chat_photo=None) ?(group_chat_created=None) ?(supergroup_chat_created=None) ?(channel_chat_created=None) ?(migrate_to_chat_id=None) ?(migrate_from_chat_id=None) ?(pinned_message=None) () =
     {message_id; from; date; chat; forward_from; forward_from_chat; forward_date; reply_to_message = reply_to; edit_date; text; entities; audio; document; photo; sticker; video; voice; caption; contact; location; venue; new_chat_member; left_chat_member; new_chat_title; new_chat_photo; delete_chat_photo; group_chat_created; supergroup_chat_created; channel_chat_created; migrate_to_chat_id; migrate_from_chat_id; pinned_message}
@@ -823,6 +838,7 @@ module CallbackQuery = struct
     inline_message_id : string option;
     data              : string
   }
+  [@@deriving show]
 
   let create ~id ~from ?(message=None) ?(inline_message_id=None) ~data () =
     {id; from; message; inline_message_id; data}
@@ -929,6 +945,7 @@ module InlineQuery = struct
     query  : string;
     offset : string
   }
+  [@@deriving show]
 
   let create ~id ~from ~query ~offset () =
     {id; from; query; offset}
@@ -945,6 +962,7 @@ module InlineQuery = struct
     from      : User.user;
     query     : string
   }
+  [@@deriving show]
 
   let read_chosen_inline_result obj =
     let result_id = the_string @@ get_field "result_id" obj in
@@ -1440,6 +1458,7 @@ module Update = struct
     | InlineQuery of int * InlineQuery.inline_query
     | ChosenInlineResult of int * InlineQuery.chosen_inline_result
     | CallbackQuery of int * CallbackQuery.callback_query
+  [@@deriving show]
 
   let read obj =
     let update_id = the_int @@ get_field "update_id" obj in
@@ -2094,6 +2113,7 @@ module Mk (B : BOT) = struct
     let headers = Cohttp.Header.init_with "Content-Type" "application/json" in
     Client.post ~headers ~body:(Cohttp_lwt.Body.of_string body) (Uri.of_string (url ^ "getUpdates")) >>= fun (_(*resp*), body) ->
     Cohttp_lwt.Body.to_string body >>= fun json ->
+    Lwt_io.(fprintf stderr "BODY: %s\n" json) >>= fun () ->
     let obj = Yojson.Safe.from_string json in
     match get_field "ok" obj with
     | `Bool true -> begin
@@ -2101,9 +2121,12 @@ module Mk (B : BOT) = struct
         (* Get the update number for the latest message (the head of the list), if it exists *)
         let update =
           match the_list @@ get_field "result" obj with
-          | x :: _ -> Success (Update.read x)
+          | x :: _ ->
+              let upd = Update.read x in
+              Success upd
           | [] -> Failure "success"
         in
+
         (* Set the offset to either: the current offset OR the latest update + 1, if one exists *)
         offset := default !offset ((fun update -> get_id update + 1) <$> update);
         let open Lwt in

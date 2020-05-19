@@ -1104,6 +1104,8 @@ module Update : sig
     | ChosenInlineResult of int * InlineQuery.chosen_inline_result
     | CallbackQuery of int * CallbackQuery.callback_query
 
+  val show_update : update -> string
+
   (** Read an [update] out of some JSON *)
   val read : Yojson.Safe.t -> update
 
