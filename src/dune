@@ -3,7 +3,7 @@
  (public_name telegraml)
  (wrapped false)
  (libraries
-   lwt lwt.unix uri cohttp cohttp-lwt
+   lwt lwt.unix uri cohttp cohttp-lwt lwt_log
    cohttp-lwt-unix yojson batteries logs
    ppx_deriving.show ppx_deriving.enum
  )
