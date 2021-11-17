@@ -8,7 +8,7 @@ default: all
 # multiple subcommands and uses the library.
 # The library can be loaded in utop for interactive testing.
 all:
-	dune build @install
+	dune build --profile release @install
 	@test -L bin || ln -s _build/install/default/bin .
 
 install: all

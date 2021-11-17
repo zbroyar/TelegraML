@@ -1096,6 +1096,7 @@ module Update : sig
 
   (** Stores the info for updates to a chat/group *)
   type update =
+    | Unknown of int
     | Message of int * Message.message
     | EditedMessage of int * Message.message
     | ChannelPost of int * Message.message

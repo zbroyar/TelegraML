@@ -1451,6 +1451,7 @@ end
 
 module Update = struct
   type update =
+    | Unknown of int
     | Message of int * Message.message
     | EditedMessage of int * Message.message
     | ChannelPost of int * Message.message
@@ -1469,6 +1470,7 @@ module Update = struct
     let inline_query = InlineQuery.read <$> get_opt_field "inline_query" obj in
     let chosen_inline_result = InlineQuery.read_chosen_inline_result <$> get_opt_field "chosen_inline_result" obj in
     let callback_query = CallbackQuery.read <$> get_opt_field "callback_query" obj in
+    let unknown = Some (Unknown update_id) in
     let r =
       None >>>=
       (message, (fun x -> Message (update_id, x))) >>>=
@@ -1477,7 +1479,8 @@ module Update = struct
       (edited_channel_post, (fun x -> EditedChannelPost (update_id, x))) >>>=
       (inline_query, (fun x -> InlineQuery (update_id, x))) >>>=
       (chosen_inline_result, (fun x -> ChosenInlineResult (update_id, x))) >>>=
-      (callback_query, (fun x -> CallbackQuery (update_id, x)))
+      (callback_query, (fun x -> CallbackQuery (update_id, x))) >>>=
+      (unknown, (fun _ -> Unknown update_id))
     in
     match r with Some r -> r | None ->
       raise @@
@@ -1488,6 +1491,7 @@ module Update = struct
       )
 
   let get_id = function
+    | Unknown id -> id
     | Message (id, _) -> id
     | EditedMessage (id, _) -> id
     | ChannelPost (id, _) -> id
