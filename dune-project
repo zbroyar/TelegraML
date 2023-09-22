@@ -1,6 +1,5 @@
 (lang dune 2.0)
 (name telegraml)
-(implicit_transitive_deps false)
 
 (generate_opam_files true)
 (source (github nv-vn/telegraml))
