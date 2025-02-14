@@ -1,0 +1,4 @@
+pin-depends: [
+  [ "local.1.0" "git://git@github.com:obolon9/local.git" ]
+  [ "lwt_helpers.1.0" "git://git@github.com:obolon9/lwt_helpers.git" ]
+]

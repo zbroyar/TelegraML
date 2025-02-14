@@ -1708,11 +1708,11 @@ module Mk (B : BOT) = struct
                                                                               +? ("reply_markup", ReplyMarkup.prepare <$> reply_markup)) in
     let body = Yojson.Safe.to_string json in
     let headers = Cohttp.Header.init_with "Content-Type" "application/json" in
-    Lwt_log.debug @@ Printf.sprintf "send_message req body: %s" body >>= fun _ ->
-    Lwt_log.debug @@ Printf.sprintf "send_message req url: %s" (url ^ "sendMessage") >>= fun _ ->
+    Lwt_log.debug "send_message req body: %s" body >>= fun _ ->
+    Lwt_log.debug "send_message req url: %s" (url ^ "sendMessage") >>= fun _ ->
     Client.post ~headers ~body:(Cohttp_lwt.Body.of_string body) (Uri.of_string (url ^ "sendMessage")) >>= fun (_(*resp*), body) ->
     Cohttp_lwt.Body.to_string body >>= fun json ->
-    Lwt_log.debug @@ Printf.sprintf "send_message resp body: %s" json >>= fun _ ->
+    Lwt_log.debug "send_message resp body: %s" json >>= fun _ ->
     let obj = Yojson.Safe.from_string json in
     return @@ match get_field "ok" obj with
     | `Bool true -> Result.Success ()

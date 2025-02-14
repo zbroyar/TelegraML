@@ -3,13 +3,16 @@
  (public_name telegraml)
  (wrapped false)
  (libraries
-   lwt lwt.unix uri cohttp cohttp-lwt lwt_log
+   lwt lwt.unix uri cohttp cohttp-lwt local
    cohttp-lwt-unix yojson batteries logs
    ppx_deriving.show ppx_deriving.enum
+   lwt_helpers
  )
  (preprocess
   (pps
     ppx_deriving.show
     ppx_deriving.enum
- ))
+  )
+ )
+ (flags (:standard -w -16))
  (synopsis "Telegram Bot API bindings for OCaml"))

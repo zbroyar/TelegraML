@@ -16,6 +16,8 @@ depends: [
   "cohttp-lwt-unix"
   "yojson"
   "batteries"
+  "local"
+  "lwt_helpers"
 ]
 build: [
   ["dune" "subst"] {pinned}
@@ -32,3 +34,7 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/nv-vn/telegraml.git"
+pin-depends: [
+  [ "local.1.0" "git://git@github.com:obolon9/local.git" ]
+  [ "lwt_helpers.1.0" "git://git@github.com:obolon9/lwt_helpers.git" ]
+]
